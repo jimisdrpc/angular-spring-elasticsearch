@@ -1,0 +1,202 @@
+{
+	"info": {
+		"_postman_id": "8a7d41e0-6af5-439f-bdbc-f65e26f6b778",
+		"name": "ElasticSearch",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "_settings",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9200/correntistas/_settings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"correntistas",
+						"_settings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add analyzer",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"analysis\": {\n        \"filter\": {\n            \"autocomplete_filter\": {\n                \"type\": \"edge_ngram\",\n                \"min_gram\": 1,\n                \"max_gram\": 20\n            }\n        },\n        \"analyzer\": {\n            \"autocomplete_search\": {\n                \"type\": \"custom\",\n                \"tokenizer\": \"standard\",\n                \"filter\": [\n                    \"lowercase\"\n                ]\n            },\n            \"autocomplete_index\": {\n                \"type\": \"custom\",\n                \"tokenizer\": \"standard\",\n                \"filter\": [\n                    \"lowercase\",\n                    \"autocomplete_filter\"\n                ]\n            }\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/correntistas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"correntistas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list index",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9200/correntistas/_search?pretty=true&q=*:*",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"correntistas",
+						"_search"
+					],
+					"query": [
+						{
+							"key": "pretty",
+							"value": "true"
+						},
+						{
+							"key": "q",
+							"value": "*:*"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post novo documento",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\t{\r\n\t\t\"conta\": \"1212\",\r\n\t\t\"sobrenome\": \"Carvalho3\",\r\n\t\t\"nome\": \"Demetrio3\"\r\n\t}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/correntistas/correntista/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"correntistas",
+						"correntista",
+						"1"
+					]
+				},
+				"description": "PUT /demo/userdetails/2 {\"user\": \"swarna\",\"message\":\"hi\"}\r\nIn you command there demo is the index, userdetails is the type, and the number is the document id. If you omit the document id ES will make one up for you"
+			},
+			"response": []
+		},
+		{
+			"name": "multi_match",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"query\": {\r\n        \"multi_match\" : {\r\n            \"query\" : \"Deme\",\r\n            \"fields\" : [\"sobrenome\", \"nome\"]\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/correntistas/_search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"correntistas",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "match",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"query\": {\r\n        \"match\" : {\r\n            \"nome\" : \"De\"\r\n        }\r\n    },\r\n    \"size\": 2,\r\n    \"from\": 0,\r\n    \"_source\": [ \"nome\", \"sobrenome\"],\r\n    \"highlight\": {\r\n        \"fields\" : {\r\n            \"sobrenome\" : {}\r\n        }\r\n    }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9200/correntistas/_search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"correntistas",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "del index",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:9200/correntistas",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"correntistas"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
