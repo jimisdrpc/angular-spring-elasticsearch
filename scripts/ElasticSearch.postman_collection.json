@@ -8,7 +8,14 @@
 		{
 			"name": "_settings",
 			"protocolProfileBehavior": {
-				"disableBodyPruning": true
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {
+					"host": true,
+					"user-agent": true,
+					"accept": true,
+					"accept-encoding": true,
+					"connection": true
+				}
 			},
 			"request": {
 				"method": "GET",
@@ -84,6 +91,11 @@
 						{
 							"key": "q",
 							"value": "*:*"
+						},
+						{
+							"key": "q",
+							"value": "d",
+							"disabled": true
 						}
 					]
 				}
