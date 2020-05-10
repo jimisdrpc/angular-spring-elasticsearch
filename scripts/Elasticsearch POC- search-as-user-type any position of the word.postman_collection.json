@@ -1,0 +1,133 @@
+{
+	"info": {
+		"_postman_id": "34b6ad6b-b6a1-4b5e-bdc7-dc23c7adf8e4",
+		"name": "Elasticsearch POC- search-as-user-type any position of the word",
+		"description": "https://stackoverflow.com/questions/61689741/desire-feature-of-searching-for-part-of-word-in-elasticsearch-returning-nothing/61690753?noredirect=1#comment109147776_61690753",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Put Index",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"settings\": {\n        \"index.max_ngram_diff\": 10,\n        \"analysis\": {\n            \"filter\": {\n                \"autocomplete_filter\": {\n                    \"type\": \"ngram\",\n                    \"min_gram\": 2,\n                    \"max_gram\": 8\n                }\n            },\n            \"analyzer\": {\n                \"autocomplete\": {\n                    \"type\": \"custom\",\n                    \"tokenizer\": \"standard\",\n                    \"filter\": [\n                        \"lowercase\",\n                        \"autocomplete_filter\"\n                    ]\n                }\n            }\n        }\n    },\n    \"mappings\": {\n        \"properties\": {\n            \"conta\": {\n                \"type\": \"text\"\n            },\n            \"sobrenome\": {\n                \"type\": \"text\"\n            },\n            \"nome\": {\n                \"type\": \"text\",\n                \"analyzer\": \"autocomplete\",\n                \"search_analyzer\": \"standard\"\n            }\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.99.100:9200/correntistas",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"99",
+						"100"
+					],
+					"port": "9200",
+					"path": [
+						"correntistas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST _doc",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"conta\": \"2222\",\n    \"sobrenome\": \"Carvalho1\",\n    \"nome\": \"Demetrio1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.99.100:9200/correntistas/_doc/1",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"99",
+						"100"
+					],
+					"port": "9200",
+					"path": [
+						"correntistas",
+						"_doc",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get _doc _search",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"query\" :{\r\n        \"match\" :{\r\n            \"nome\" :\"De\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.99.100:9200/correntistas/_doc/_search",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"99",
+						"100"
+					],
+					"port": "9200",
+					"path": [
+						"correntistas",
+						"_doc",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DEL index",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.99.100:9200/correntistas",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"99",
+						"100"
+					],
+					"port": "9200",
+					"path": [
+						"correntistas"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
