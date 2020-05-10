@@ -9,7 +9,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.data.elasticsearch.annotations.Setting;
 
 @Document(indexName = "correntistas")
-@Setting(settingPath = "data/es-config/elastic-setting.json")
+//@Setting(settingPath = "data/es-config/elastic-setting.json")
 @Getter
 @Setter
 public class Correntista {
