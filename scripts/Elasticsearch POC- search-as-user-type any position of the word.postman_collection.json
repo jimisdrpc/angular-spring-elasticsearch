@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"settings\": {\n        \"index.max_ngram_diff\": 10,\n        \"analysis\": {\n            \"filter\": {\n                \"autocomplete_filter\": {\n                    \"type\": \"ngram\",\n                    \"min_gram\": 2,\n                    \"max_gram\": 8\n                }\n            },\n            \"analyzer\": {\n                \"autocomplete\": {\n                    \"type\": \"custom\",\n                    \"tokenizer\": \"standard\",\n                    \"filter\": [\n                        \"lowercase\",\n                        \"autocomplete_filter\"\n                    ]\n                }\n            }\n        }\n    },\n    \"mappings\": {\n        \"properties\": {\n            \"conta\": {\n                \"type\": \"text\"\n            },\n            \"sobrenome\": {\n                \"type\": \"text\"\n            },\n            \"nome\": {\n                \"type\": \"text\",\n                \"analyzer\": \"autocomplete\",\n                \"search_analyzer\": \"standard\"\n            }\n        }\n    }\n}",
+					"raw": "{\n    \"settings\": {\n        \"index.max_ngram_diff\": 10,\n        \"analysis\": {\n            \"filter\": {\n                \"autocomplete_filter\": {\n                    \"type\": \"ngram\",\n                    \"min_gram\": 2,\n                    \"max_gram\": 8\n                }\n            },\n            \"analyzer\": {\n                \"autocomplete\": {\n                    \"type\": \"custom\",\n                    \"tokenizer\": \"standard\",\n                    \"filter\": [\n                        \"lowercase\",\n                        \"autocomplete_filter\"\n                    ]\n                }\n            }\n        }\n    },\n    \"mappings\": {\n        \"properties\": {\n            \"conta\": {\n                \"type\": \"text\"\n            },\n            \"sobrenome\": {\n                \"type\": \"text\"\n            },\n            \"nome\": {\n                \"type\": \"text\",\n                \"analyzer\": \"autocomplete\",\n                \"search_analyzer\": \"standard\"\n            },\n            \"cpf\": {\n                \"type\": \"text\",\n                \"analyzer\": \"autocomplete\",\n                \"search_analyzer\": \"standard\"\n            }\n        }\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -44,7 +44,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"conta\": \"2222\",\n    \"sobrenome\": \"Carvalho1\",\n    \"nome\": \"Demetrio1\"\n}",
+					"raw": "{\n    \"conta\": \"1111\",\n    \"sobrenome\": \"Surname\",\n    \"nome\": \"Firstname Secondname\",\n    \"cpf\": \"12345678910\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -80,7 +80,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"query\" :{\r\n        \"match\" :{\r\n            \"nome\" :\"De\"\r\n        }\r\n    }\r\n}",
+					"raw": "{\r\n    \"query\" :{\r\n        \"match\" :{\r\n            \"cpf\" :\"123\"\r\n        }\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
